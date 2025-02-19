@@ -14,4 +14,8 @@ class AlgorithmParam: Param<Algorithm>() {
 	}
 	throw ParamException.ParamNotFound(this)
   }
+
+  override fun getValue(options: Map<String, String>) = alias.first {
+	it.value == options[it.value]?.lowercase()
+  }
 }
