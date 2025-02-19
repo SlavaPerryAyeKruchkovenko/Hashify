@@ -24,4 +24,10 @@ sealed class ParamException @JvmOverloads constructor(
   ): ParamException(
 	  message = "file for path $path not found"
   )
+
+  data class CannotCreateFileException(
+	private val path: String,
+  ): ParamException(
+	  message = "cannot create fil for path $path"
+  )
 }

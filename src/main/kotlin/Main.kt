@@ -13,6 +13,7 @@ fun main(args: Array<String>) {
   val params = getParams(options)
   val command = getCommandByParams(params, options)
   command.execute()
+  println("Done")
 }
 
 private fun getOptions(args: Array<String>) = args.mapNotNull {
