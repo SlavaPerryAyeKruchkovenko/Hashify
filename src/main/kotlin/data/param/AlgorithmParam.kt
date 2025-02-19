@@ -3,7 +3,7 @@ package org.gigachad.data.param
 import org.gigachad.data.Algorithm
 import org.gigachad.data.exception.ParamException
 
-class AlgorithmParam: Param<Algorithm>() {
+data object  AlgorithmParam: Param<Algorithm>() {
 
   override val alias: List<Algorithm> = Algorithm.entries.toList()
   override fun validate(options: Map<String, String>) {

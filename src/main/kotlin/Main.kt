@@ -4,16 +4,13 @@ import org.gigachad.data.command.Command
 import org.gigachad.data.command.HelpCommand
 import org.gigachad.data.command.UnprocessedCommand
 import org.gigachad.data.mapper.CommandMapper.getHashCommandByParams
-import org.gigachad.data.param.HelpParam
-import org.gigachad.data.param.Param
-import kotlin.reflect.full.isSubclassOf
+import org.gigachad.data.param.*
 
 fun main(args: Array<String>) {
   val options = getOptions(args)
   val params = getParams(options)
   val command = getCommandByParams(params, options)
   command.execute()
-  println("Done")
 }
 
 private fun getOptions(args: Array<String>) = args.mapNotNull {
@@ -34,14 +31,12 @@ private fun getOptions(args: Array<String>) = args.mapNotNull {
 }.toMap()
 
 fun getParams(options: Map<String, String>): List<Param<*>> {
-  val params = Param::class.nestedClasses.filter { it.isFinal && it.isSubclassOf(Param::class) }
-	  .mapNotNull { it.objectInstance as? Param<*> }
+  val params = listOf(AlgorithmParam, HelpParam, InputParam, OutputParam)
   return params.filter {
 	try {
-	  params.forEach { it.validate(options) }
+	  it.validate(options)
 	  true
 	} catch (e: Exception) {
-	  println("Validation failed: ${e.message}")
 	  false
 	}
   }
