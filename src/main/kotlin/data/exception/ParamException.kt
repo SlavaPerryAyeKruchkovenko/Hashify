@@ -18,4 +18,10 @@ sealed class ParamException @JvmOverloads constructor(
   ): ParamException(
 	  message = "expected count of params: $expectedCount actual is $actualCount for param alias ${param.alias}"
   )
+
+  data class FileNotFoundException(
+	private val path: String,
+  ): ParamException(
+	  message = "file for path $path not found"
+  )
 }
