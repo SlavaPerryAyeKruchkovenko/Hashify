@@ -24,8 +24,8 @@ data object HelpCommand : Command() {
        ${params.joinToString("\n\t") { it.info }}
 
     Примеры:
-      --input="~/test.csv" --output="~/test2.csv" md5
-      --input="data.txt" --output="result.txt" sha256
+      --input=~/test.csv md5 --columns="1,2"
+      --i=~/test.csv sha256 --o=~/test2.scv --ir="0" --col="1,2"
 
     Дополнительно:
       ${HelpParam.info}
