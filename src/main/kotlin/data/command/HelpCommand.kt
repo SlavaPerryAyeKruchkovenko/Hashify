@@ -10,9 +10,13 @@ import org.hashify.data.param.model.OutputParam
 
 data object HelpCommand : Command() {
     private val params = listOf<Describable>(InputParam, OutputParam, AlgorithmParam, IgnoreRowParam, HashColumnsParam)
-    private val projectName = System.getProperty("project.name", "Unknown Project")
+    private val projectName by lazy {
+        System.getProperty("project.name")
+    }
+
     override fun execute() {
-        print("""
+        print(
+            """
 Использование:
     $projectName.jar --input="<путь_к_файлу>.csv" --output="<путь_к_файлу>.csv" <алгоритм> --columns="1,2" --ignore-rows="0,12"
 
