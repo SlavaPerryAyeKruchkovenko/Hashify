@@ -8,7 +8,13 @@ import org.gigachad.data.param.*
 
 fun main(args: Array<String>) {
     val options = getOptions(args)
-    val params = getParams(options)
+    val params = getParams(options).onEach { param ->
+        runCatching {
+            param.validate(options)
+        }.onFailure {
+            println("Error: ${it.message}")
+        }
+    }
     val command = getCommandByParams(params, options)
     command.execute()
 }
@@ -42,9 +48,15 @@ fun getParams(options: Map<String, String>): List<Param<*>> {
 }
 
 fun getCommandByParams(params: List<Param<*>>, options: Map<String, String>): Command {
+    val hashParams = setOf(AlgorithmParam::class, InputParam::class)
+    val paramClasses = params.map { it::class }.toSet()
     return when {
         params.size == 1 && params[0] is HelpParam -> HelpCommand
-        params.size in 2..3 -> getHashCommandByParams(params, options)
+        params.size in 2..3 && hashParams.all { it in paramClasses } -> getHashCommandByParams(
+            params,
+            options
+        )
+
         else -> UnprocessedCommand
     }
 }

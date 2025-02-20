@@ -18,4 +18,10 @@ data object AlgorithmParam : Param<Algorithm>() {
     override fun getValue(options: Map<String, String>) = alias.first {
         it.value == options[it.value]?.lowercase()
     }
+
+    override fun available(options: Map<String, String>): Boolean {
+        return options.keys.any { key ->
+            alias.map { it.value.lowercase() }.contains(key.lowercase())
+        }
+    }
 }
