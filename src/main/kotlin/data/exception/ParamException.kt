@@ -8,7 +8,7 @@ sealed class ParamException @JvmOverloads constructor(
 ) : Exception(message) {
 
     data class ParamNotFound(private val param: Param<*>) : ParamException(
-        message = "parameter with alias ${param.alias.joinToString { it.toString() }} not found"
+        message = "parameter with alias ${param.alias.joinToString { it }} not found"
     )
 
     data class IncorrectCountOfParams(
@@ -29,5 +29,9 @@ sealed class ParamException @JvmOverloads constructor(
         private val path: String,
     ) : ParamException(
         message = "cannot create fil for path $path"
+    )
+
+    data class IncorrectCharactersParamValue(val incorrectCharacters: Collection<String>) : ParamException(
+        message = "Invalid characters ${incorrectCharacters.joinToString()}"
     )
 }

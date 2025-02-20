@@ -20,4 +20,20 @@ object Validator {
         }
         throw ParamException.ParamNotFound(param)
     }
+
+    fun validateArrayParam(options: Map<String, String>, param: Param<Collection<Int>>) {
+        options.keys.forEach { key ->
+            val value = options[key]?.trim()
+            val regex = Regex("^[0-9,]+$")
+            if (value != null) {
+                if (regex.matches(value)) {
+                    return
+                } else {
+                    val forbiddenChars = Regex("[^0-9,]").findAll(value).map { it.value }.toSet()
+                    throw ParamException.IncorrectCharactersParamValue(forbiddenChars)
+                }
+            }
+        }
+        throw ParamException.ParamNotFound(param)
+    }
 }

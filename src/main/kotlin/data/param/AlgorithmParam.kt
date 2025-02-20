@@ -4,24 +4,18 @@ import org.gigachad.data.Algorithm
 import org.gigachad.data.exception.ParamException
 
 data object AlgorithmParam : Param<Algorithm>() {
-
-    override val alias: List<Algorithm> = Algorithm.entries.toList()
+    private val algorithms = Algorithm.entries.toList()
+    override val alias: List<String> = algorithms.map { it.value }
     override fun validate(options: Map<String, String>) {
         options.keys.forEach { key ->
-            if (alias.map { it.value }.contains(key.lowercase())) {
+            if (algorithms.map { it.value }.contains(key.lowercase())) {
                 return
             }
         }
         throw ParamException.ParamNotFound(this)
     }
 
-    override fun getValue(options: Map<String, String>) = alias.first {
+    override fun getValue(options: Map<String, String>) = algorithms.first {
         it.value == options[it.value]?.lowercase()
-    }
-
-    override fun available(options: Map<String, String>): Boolean {
-        return options.keys.any { key ->
-            alias.map { it.value.lowercase() }.contains(key.lowercase())
-        }
     }
 }
