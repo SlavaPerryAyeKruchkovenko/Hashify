@@ -21,12 +21,12 @@ class HashFileCommand @JvmOverloads constructor(
                 line
             } else {
                 val cells = line.split(",")
-                line + cells.mapIndexedNotNull { colIndex, value ->
+                cells.mapIndexed { colIndex, value ->
                     val cell = value.trim()
                     if (colIndex in hashColumn && cell.isNotBlank()) {
                         hashString(cell, algorithm)
                     } else {
-                        null
+                        cell
                     }
                 }.joinToString(",")
             }

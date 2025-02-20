@@ -1,8 +1,8 @@
 package org.hashify.data.util
 
-import java.io.File
 import org.hashify.data.exception.ParamException
 import org.hashify.data.param.model.Param
+import java.io.File
 
 object Validator {
 
@@ -21,11 +21,11 @@ object Validator {
         throw ParamException.ParamNotFound(param)
     }
 
-    fun validateArrayParam(options: Map<String, String>, param: Param<Collection<Int>>) {
+    fun validateArrayParam(options: Map<String, String>, param: Param<Collection<Int>>, alias: List<String>) {
+        val regex = Regex("^[0-9,]+$")
         options.keys.forEach { key ->
             val value = options[key]?.trim()
-            val regex = Regex("^[0-9,]+$")
-            if (value != null) {
+            if (alias.contains(key.lowercase()) && value != null) {
                 if (regex.matches(value)) {
                     return
                 } else {

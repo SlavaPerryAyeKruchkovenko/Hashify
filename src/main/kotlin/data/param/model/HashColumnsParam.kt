@@ -12,7 +12,7 @@ data object HashColumnsParam : Param<Collection<Int>>(), Describable {
     }
 
     override fun validate(options: Map<String, String>) {
-        Validator.validateArrayParam(options, this)
+        Validator.validateArrayParam(options, this, alias)
     }
 
     override val info: String
