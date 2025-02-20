@@ -1,7 +1,7 @@
 package org.gigachad.data.param
 
-import org.gigachad.data.exception.ParamException
 import java.io.File
+import org.gigachad.data.exception.ParamException
 
 data object OutputParam : Param<String>() {
 

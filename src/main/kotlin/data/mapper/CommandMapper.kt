@@ -1,7 +1,10 @@
 package org.gigachad.data.mapper
 
 import org.gigachad.data.command.HashFileCommand
-import org.gigachad.data.param.*
+import org.gigachad.data.param.AlgorithmParam
+import org.gigachad.data.param.InputParam
+import org.gigachad.data.param.OutputParam
+import org.gigachad.data.param.Param
 
 object CommandMapper {
 

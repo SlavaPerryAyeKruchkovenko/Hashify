@@ -1,8 +1,8 @@
 package org.gigachad.data.command
 
-import org.gigachad.data.Algorithm
 import java.io.File
 import java.security.MessageDigest
+import org.gigachad.data.Algorithm
 
 class HashFileCommand @JvmOverloads constructor(
     private val inputPath: String,

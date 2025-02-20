@@ -4,7 +4,11 @@ import org.gigachad.data.command.Command
 import org.gigachad.data.command.HelpCommand
 import org.gigachad.data.command.UnprocessedCommand
 import org.gigachad.data.mapper.CommandMapper.getHashCommandByParams
-import org.gigachad.data.param.*
+import org.gigachad.data.param.AlgorithmParam
+import org.gigachad.data.param.HelpParam
+import org.gigachad.data.param.InputParam
+import org.gigachad.data.param.OutputParam
+import org.gigachad.data.param.Param
 
 fun main(args: Array<String>) {
     val options = getOptions(args)

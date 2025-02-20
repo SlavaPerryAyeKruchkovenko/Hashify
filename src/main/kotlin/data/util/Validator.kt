@@ -1,8 +1,8 @@
 package org.gigachad.data.util
 
+import java.io.File
 import org.gigachad.data.exception.ParamException
 import org.gigachad.data.param.Param
-import java.io.File
 
 object Validator {
 
