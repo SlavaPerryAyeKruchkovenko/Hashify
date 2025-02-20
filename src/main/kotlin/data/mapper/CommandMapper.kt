@@ -1,10 +1,12 @@
-package org.gigachad.data.mapper
+package org.hashify.data.mapper
 
-import org.gigachad.data.command.HashFileCommand
-import org.gigachad.data.param.AlgorithmParam
-import org.gigachad.data.param.InputParam
-import org.gigachad.data.param.OutputParam
-import org.gigachad.data.param.Param
+import org.hashify.data.command.HashFileCommand
+import org.hashify.data.param.model.AlgorithmParam
+import org.hashify.data.param.model.HashColumnsParam
+import org.hashify.data.param.model.IgnoreRowParam
+import org.hashify.data.param.model.InputParam
+import org.hashify.data.param.model.OutputParam
+import org.hashify.data.param.model.Param
 
 object CommandMapper {
 
@@ -12,6 +14,8 @@ object CommandMapper {
         val input = params.first { it is InputParam } as InputParam
         val output = params.firstOrNull { it is OutputParam }
         val algorithm = params.first { it is AlgorithmParam } as AlgorithmParam
+        val hashColumn = params.first { it is HashColumnsParam } as HashColumnsParam
+        val ignoreRow = params.firstOrNull { it is IgnoreRowParam }
         return HashFileCommand(
             inputPath = input.getValue(options),
             algorithm = algorithm.getValue(options),
@@ -19,7 +23,13 @@ object CommandMapper {
                 (output as OutputParam).getValue(options)
             } else {
                 null
-            }
+            },
+            hashColumn = hashColumn.getValue(options),
+            ignoreRow = if (ignoreRow != null) {
+                (ignoreRow as IgnoreRowParam).getValue(options)
+            } else {
+                null
+            },
         )
     }
 }

@@ -1,14 +1,15 @@
-package org.gigachad
+package org.hashify
 
-import org.gigachad.data.command.Command
-import org.gigachad.data.command.HelpCommand
-import org.gigachad.data.command.UnprocessedCommand
-import org.gigachad.data.mapper.CommandMapper.getHashCommandByParams
-import org.gigachad.data.param.AlgorithmParam
-import org.gigachad.data.param.HelpParam
-import org.gigachad.data.param.InputParam
-import org.gigachad.data.param.OutputParam
-import org.gigachad.data.param.Param
+import org.hashify.data.command.Command
+import org.hashify.data.command.HelpCommand
+import org.hashify.data.command.UnprocessedCommand
+import org.hashify.data.mapper.CommandMapper.getHashCommandByParams
+import org.hashify.data.param.model.AlgorithmParam
+import org.hashify.data.param.model.HashColumnsParam
+import org.hashify.data.param.model.HelpParam
+import org.hashify.data.param.model.InputParam
+import org.hashify.data.param.model.OutputParam
+import org.hashify.data.param.model.Param
 
 fun main(args: Array<String>) {
     val options = getOptions(args)
@@ -52,11 +53,11 @@ fun getParams(options: Map<String, String>): List<Param<*>> {
 }
 
 fun getCommandByParams(params: List<Param<*>>, options: Map<String, String>): Command {
-    val hashParams = setOf(AlgorithmParam::class, InputParam::class)
+    val hashParams = setOf(AlgorithmParam::class, InputParam::class, HashColumnsParam::class)
     val paramClasses = params.map { it::class }.toSet()
     return when {
         params.size == 1 && params[0] is HelpParam -> HelpCommand
-        params.size in 2..3 && hashParams.all { it in paramClasses } -> getHashCommandByParams(
+        params.size in 3..5 && hashParams.all { it in paramClasses } -> getHashCommandByParams(
             params,
             options
         )

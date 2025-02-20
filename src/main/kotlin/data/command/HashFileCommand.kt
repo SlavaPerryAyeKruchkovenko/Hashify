@@ -1,23 +1,40 @@
-package org.gigachad.data.command
+package org.hashify.data.command
 
 import java.io.File
 import java.security.MessageDigest
-import org.gigachad.data.Algorithm
+import org.hashify.data.Algorithm
 
 class HashFileCommand @JvmOverloads constructor(
     private val inputPath: String,
     private val algorithm: Algorithm,
     private val outputPath: String? = null,
+    private val hashColumn: Collection<Int>,
+    private val ignoreRow: Collection<Int>? = null,
 ) : Command() {
 
     override fun execute() {
         val inputFile = File(inputPath)
-        val hashedData = inputFile.readLines().map { line ->
-            line.split(",").joinToString(",") { cell -> hashString(cell.trim(), algorithm) }
+        val lines = inputFile.readLines()
+
+        val hashedData = lines.mapIndexed { index, line ->
+            if (ignoreRow?.contains(index) == true) {
+                line
+            } else {
+                val cells = line.split(",")
+                line + cells.mapIndexedNotNull { colIndex, value ->
+                    val cell = value.trim()
+                    if (colIndex in hashColumn && cell.isNotBlank()) {
+                        hashString(cell, algorithm)
+                    } else {
+                        null
+                    }
+                }.joinToString(",")
+            }
         }
+
         if (outputPath != null) {
             File(outputPath).writeText(hashedData.joinToString("\n"))
-            println("Result write in: $outputPath")
+            println("Result written in: $outputPath")
         } else {
             hashedData.forEach { println(it) }
         }

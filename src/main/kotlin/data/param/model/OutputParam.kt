@@ -1,9 +1,10 @@
-package org.gigachad.data.param
+package org.hashify.data.param.model
 
 import java.io.File
-import org.gigachad.data.exception.ParamException
+import org.hashify.data.exception.ParamException
+import org.hashify.data.param.Describable
 
-data object OutputParam : Param<String>() {
+data object OutputParam : Param<String>(), Describable {
 
     override val alias: List<String> = listOf("--output", "-output", "-o", "--o")
     override fun getValue(options: Map<String, String>) = alias.firstNotNullOf {
@@ -24,4 +25,7 @@ data object OutputParam : Param<String>() {
         }
         throw ParamException.ParamNotFound(this)
     }
+
+    override val info: String
+        get() = "${alias.joinToString()}=<файл>.csv. Указывает путь к выходному файлу."
 }

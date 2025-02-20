@@ -1,6 +1,6 @@
-package org.gigachad.data.exception
+package org.hashify.data.exception
 
-import org.gigachad.data.param.Param
+import org.hashify.data.param.model.Param
 
 sealed class ParamException @JvmOverloads constructor(
     override val message: String,

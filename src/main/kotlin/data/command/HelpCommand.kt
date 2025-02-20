@@ -1,30 +1,35 @@
-package org.gigachad.data.command
+package org.hashify.data.command
 
-import org.gigachad.data.Algorithm
+import org.hashify.data.param.Describable
+import org.hashify.data.param.model.AlgorithmParam
+import org.hashify.data.param.model.HashColumnsParam
+import org.hashify.data.param.model.HelpParam
+import org.hashify.data.param.model.IgnoreRowParam
+import org.hashify.data.param.model.InputParam
+import org.hashify.data.param.model.OutputParam
 
 data object HelpCommand : Command() {
-    private val algorithms = Algorithm.entries.toList()
+    private val params = listOf<Describable>(InputParam, OutputParam, AlgorithmParam, IgnoreRowParam, HashColumnsParam)
+    private val projectName = System.getProperty("project.name", "Unknown Project")
     override fun execute() {
         print(
             """
-        Использование:
-          hashify.jar --input="<путь_к_файлу>.csv" --output="<путь_к_файлу>.scv" <алгоритм>
+    Использование:
+      $projectName.jar --input="<путь_к_файлу>.csv" --output="<путь_к_файлу>.csv" <алгоритм> --columns="1,2" --ignore-rows="0,12"
 
-        Описание:
-          Читает строки из файла и применяет указанный алгоритм шифрования.
+    Описание:
+      Читает строки из файла и применяет указанный алгоритм шифрования.
 
-        Аргументы:
-          -input, -i, --i, --input="<файл>.csv"   Указывает путь к входному файлу.
-          -output, -o, --o, --output="<файл>.scv"  Указывает путь к выходному файлу.
-          <алгоритм> Название алгоритма все алгоритмы ${algorithms.joinToString { it.value }}.
+    Аргументы:
+       ${params.joinToString("\n\t") { it.info }}
 
-        Примеры:
-          --input="~/test.csv" --output="~/test2.csv" md5
-          --input="data.txt" --output="result.txt" sha256
+    Примеры:
+      --input="~/test.csv" --output="~/test2.csv" md5
+      --input="data.txt" --output="result.txt" sha256
 
-        Дополнительно:
-          -h, --help   Показать справку.
-        """.trimIndent()
+    Дополнительно:
+      ${HelpParam.info}
+    """.trimIndent()
         )
     }
 }

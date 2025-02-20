@@ -1,4 +1,4 @@
-package org.gigachad.data.param
+package org.hashify.data.param.model
 
 sealed class Param<T> {
 

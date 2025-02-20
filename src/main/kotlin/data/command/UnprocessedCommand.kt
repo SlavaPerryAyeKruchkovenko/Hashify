@@ -1,4 +1,4 @@
-package org.gigachad.data.command
+package org.hashify.data.command
 
 data object UnprocessedCommand : Command() {
 
