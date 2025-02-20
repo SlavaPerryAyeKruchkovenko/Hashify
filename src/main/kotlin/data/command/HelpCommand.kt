@@ -12,24 +12,23 @@ data object HelpCommand : Command() {
     private val params = listOf<Describable>(InputParam, OutputParam, AlgorithmParam, IgnoreRowParam, HashColumnsParam)
     private val projectName = System.getProperty("project.name", "Unknown Project")
     override fun execute() {
-        print(
-            """
-    Использование:
-      $projectName.jar --input="<путь_к_файлу>.csv" --output="<путь_к_файлу>.csv" <алгоритм> --columns="1,2" --ignore-rows="0,12"
+        print("""
+Использование:
+    $projectName.jar --input="<путь_к_файлу>.csv" --output="<путь_к_файлу>.csv" <алгоритм> --columns="1,2" --ignore-rows="0,12"
 
-    Описание:
-      Читает строки из файла и применяет указанный алгоритм шифрования.
+Описание:
+    Читает строки из файла и применяет указанный алгоритм шифрования.
 
-    Аргументы:
-       ${params.joinToString("\n\t") { it.info }}
+Аргументы:
+    ${params.joinToString("\n\t\t") { it.info }}
 
-    Примеры:
-      --input=~/test.csv md5 --columns="1,2"
-      --i=~/test.csv sha256 --o=~/test2.scv --ir="0" --col="1,2"
+Примеры:
+  --input=~/test.csv md5 --columns="1,2"
+  --i=~/test.csv sha256 --o=~/test2.scv --ir="0" --col="1,2"
 
-    Дополнительно:
-      ${HelpParam.info}
-    """.trimIndent()
+Дополнительно:
+  ${HelpParam.info}
+""".trim()
         )
     }
 }
