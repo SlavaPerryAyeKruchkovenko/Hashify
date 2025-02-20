@@ -1,8 +1,8 @@
 package org.gigachad.data.command
 
-data object UnprocessedCommand: Command() {
+data object UnprocessedCommand : Command() {
 
-  override fun execute() {
-	println("unprocessed command")
-  }
+    override fun execute() {
+        println("unprocessed command")
+    }
 }
