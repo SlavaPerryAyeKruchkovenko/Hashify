@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "org.hashify"
-version = "1.0-SNAPSHOT"
+version = "0.0.1"
 val projectName: String = rootProject.name
 
 repositories {
@@ -22,6 +22,16 @@ application {
 }
 tasks.test {
     useJUnitPlatform()
+}
+tasks.jar {
+    archiveFileName.set("${projectName}.jar")
+    manifest {
+        attributes(
+            "Main-Class" to application.mainClass.get() // Указываем главный класс
+        )
+    }
+    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 kotlin {
     jvmToolchain(17)
