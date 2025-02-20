@@ -22,7 +22,7 @@ class HashFileCommand @JvmOverloads constructor(
             } else {
                 val cells = line.split(",")
                 cells.mapIndexed { colIndex, value ->
-                    val cell = value.trim()
+                    val cell = value.trim().replace("\"","")
                     if (colIndex in hashColumn && cell.isNotBlank()) {
                         hashString(cell, algorithm)
                     } else {
